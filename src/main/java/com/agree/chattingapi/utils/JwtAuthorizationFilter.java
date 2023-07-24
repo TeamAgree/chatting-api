@@ -1,6 +1,7 @@
 package com.agree.chattingapi.utils;
 
 import com.agree.chattingapi.conf.AuthConstants;
+import com.agree.chattingapi.constants.StatusCode;
 import com.agree.chattingapi.responses.CommonResponse;
 import com.agree.chattingapi.services.UserService;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -83,7 +84,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
                         if(TokenUtils.isValidToken(refreshToken) == 0){
                             String accessToken = TokenUtils.reGenerateAccessToken(refreshToken);
                             printWriter.print(new ObjectMapper().writeValueAsString(
-                                    new CommonResponse<>("02", "re-generate token", accessToken)
+                                    new CommonResponse<>(StatusCode.RE_GENERATE_TOKEN, "re-generate token", accessToken)
                             ));
                             printWriter.flush();
                             printWriter.close();
@@ -142,7 +143,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
             resultMsg = "OTHER TOKEN ERROR";
         }
 
-        CommonResponse<String> response = new CommonResponse<>("01", resultMsg, e.getMessage());
+        CommonResponse<String> response = new CommonResponse<>(StatusCode.FAIL, resultMsg, e.getMessage());
         logger.error(resultMsg, e);
         return new ObjectMapper().writeValueAsString(response);
     }
