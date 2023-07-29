@@ -4,7 +4,9 @@ import ch.qos.logback.classic.Logger;
 import com.agree.chattingapi.conf.AuthConstants;
 import com.agree.chattingapi.dtos.user.LoginRequest;
 import com.agree.chattingapi.dtos.user.ModifyUserRequest;
+import com.agree.chattingapi.entities.TokenInfo;
 import com.agree.chattingapi.entities.UserInfo;
+import com.agree.chattingapi.repositories.TokenRepository;
 import com.agree.chattingapi.repositories.UserRepository;
 import com.agree.chattingapi.utils.TokenUtils;
 import jakarta.servlet.http.Cookie;
@@ -22,13 +24,17 @@ public class UserService {
 
     private static final Logger log = (Logger) LoggerFactory.getLogger(UserService.class);
     private final UserRepository userRepository;
+    private final TokenRepository tokenRepository;
 
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, TokenRepository tokenRepository) {
         this.userRepository = userRepository;
+        this.tokenRepository = tokenRepository;
     }
 
     @Transactional
     public UserInfo join(UserInfo userInfo){
+        userInfo.setCreatedBy(userInfo.getId());
+        userInfo.setUpdatedBy(userInfo.getId());
         userRepository.save(userInfo);
         return userInfo;
     }
@@ -86,6 +92,19 @@ public class UserService {
     }
 
     @Transactional
+    public String deleteUser(String userId){
+        UserInfo findUser = userRepository.findById(userId).orElse(null);
+
+        if (findUser != null) {
+            findUser.setStatus("N");
+            return "success";
+        } else {
+            return "fail";
+        }
+
+    }
+
+    @Transactional
     public String modifyPw(ModifyUserRequest request){
         UserInfo findUser = userRepository.findById(request.getId()).orElse(null);
 
@@ -109,11 +128,18 @@ public class UserService {
         }
     }
 
-    public String logout(HttpServletResponse response){
+    @Transactional
+    public String logout(HttpServletRequest request, HttpServletResponse response){
         Cookie cookie = new Cookie("chatting-app", null);
         cookie.setMaxAge(0);
         cookie.setPath("/");
         response.addCookie(cookie);
+
+        String userId = TokenUtils.getUserIdFromToken(TokenUtils.getTokenFromHeader(request.getHeader(AuthConstants.AUTH_HEADER)));
+        TokenInfo findToken = tokenRepository.findById(userId).orElse(null);
+        if(findToken != null) {
+            findToken.setToken(null);
+        }
 
         SecurityContextHolder.clearContext();
 

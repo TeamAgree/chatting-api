@@ -17,9 +17,19 @@ public class TokenService {
 
     @Transactional
     public void generateTokenForLogin(UserInfo userInfo, String token){
-        TokenInfo tokenInfo = new TokenInfo(userInfo.getId(), token, userInfo.getRoles());
+        String userId = userInfo.getId();
+        TokenInfo findToken = repository.findById(userId).orElse(null);
+        if(findToken == null){
+            TokenInfo tokenInfo = new TokenInfo(userId, token, userInfo.getRoles());
+            tokenInfo.setCreatedBy(userId);
+            tokenInfo.setUpdatedBy(userId);
 
-        repository.save(tokenInfo);
+            repository.save(tokenInfo);
+        }else {
+            findToken.setToken(token);
+        }
+
+
     }
 
 }

@@ -92,6 +92,7 @@ public class TokenUtils {
     }
 
     public static String getTokenFromHeader(String header) {
+        if(header == null) return null;
         return header.split(" ")[1];
     }
 

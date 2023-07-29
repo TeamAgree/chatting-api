@@ -30,6 +30,11 @@ public class PrivateUserController {
         return new CommonResponse<>(userService.modifyUser(request));
     }
 
+    @DeleteMapping("/user")
+    public CommonResponse<String> deleteUser(@RequestBody ModifyUserRequest request){
+        return new CommonResponse<>(userService.deleteUser(request.getId()));
+    }
+
     @PutMapping("/user/pw")
     public CommonResponse<String> modifyPw(@RequestBody ModifyUserRequest request){
         return new CommonResponse<>(userService.modifyPw(request));
@@ -41,8 +46,8 @@ public class PrivateUserController {
     }
 
     @GetMapping("/logout")
-    public CommonResponse<String> logout(HttpServletResponse response){
-        return new CommonResponse<>(userService.logout(response));
+    public CommonResponse<String> logout(HttpServletRequest request, HttpServletResponse response){
+        return new CommonResponse<>(userService.logout(request, response));
     }
 
 }
