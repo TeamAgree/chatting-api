@@ -1,7 +1,7 @@
 package com.agree.chattingapi.services;
 
 import ch.qos.logback.classic.Logger;
-import com.agree.chattingapi.conf.AuthConstants;
+import com.agree.chattingapi.constants.AuthConstants;
 import com.agree.chattingapi.dtos.user.LoginRequest;
 import com.agree.chattingapi.dtos.user.ModifyUserRequest;
 import com.agree.chattingapi.entities.TokenInfo;

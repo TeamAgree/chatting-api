@@ -1,6 +1,6 @@
 package com.agree.chattingapi.utils;
 
-import com.agree.chattingapi.conf.AuthConstants;
+import com.agree.chattingapi.constants.AuthConstants;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.context.annotation.Configuration;
