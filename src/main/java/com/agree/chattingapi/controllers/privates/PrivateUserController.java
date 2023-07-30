@@ -20,22 +20,22 @@ public class PrivateUserController {
         this.userService = userService;
     }
 
-    @GetMapping("/user")
+    @GetMapping
     public CommonResponse<UserInfo> getUser(HttpServletRequest request){
         return new CommonResponse<>(userService.getUser(request));
     }
 
-    @PutMapping("/user")
+    @PutMapping
     public CommonResponse<String> modifyUser(@RequestBody ModifyUserRequest request){
         return new CommonResponse<>(userService.modifyUser(request));
     }
 
-    @DeleteMapping("/user")
+    @DeleteMapping
     public CommonResponse<String> deleteUser(@RequestBody ModifyUserRequest request){
         return new CommonResponse<>(userService.deleteUser(request.getId()));
     }
 
-    @PutMapping("/user/pw")
+    @PutMapping("/pw")
     public CommonResponse<String> modifyPw(@RequestBody ModifyUserRequest request){
         return new CommonResponse<>(userService.modifyPw(request));
     }
