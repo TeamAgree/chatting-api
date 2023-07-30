@@ -1,5 +1,7 @@
 package com.agree.chattingapi.services;
 
+import ch.qos.logback.classic.Logger;
+import com.agree.chattingapi.constants.AuthConstants;
 import com.agree.chattingapi.constants.FriendShipStatus;
 import com.agree.chattingapi.dtos.friend.AddFriendRequest;
 import com.agree.chattingapi.entities.FriendInfo;
@@ -8,13 +10,18 @@ import com.agree.chattingapi.entities.UserInfo;
 import com.agree.chattingapi.repositories.FriendRepository;
 import com.agree.chattingapi.repositories.UserRepository;
 import com.agree.chattingapi.utils.CustomizedException;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import com.agree.chattingapi.utils.TokenUtils;
+import jakarta.servlet.http.HttpServletRequest;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 public class FriendService {
 
+    private static final Logger log = (Logger) LoggerFactory.getLogger(FriendService.class);
     private final FriendRepository friendRepository;
     private final UserRepository userRepository;
 
@@ -54,6 +61,15 @@ public class FriendService {
         findFriend.setFriendShipStatus(FriendShipStatus.BLOCK);
 
         return "success";
+    }
+
+    @Transactional
+    public List<String> getFriends(HttpServletRequest request){
+        String userId = TokenUtils.getUserIdFromToken(TokenUtils.getTokenFromHeader(request.getHeader(AuthConstants.AUTH_HEADER)));
+
+        log.warn("find friend");
+
+        return userRepository.findById(userId).get().getFriends();
     }
 
 }

@@ -28,6 +28,10 @@ public class FriendInfo extends CommonEntity {
         this.friendShipStatus = FriendShipStatus.FRIEND;
     }
 
+    public String getFriendId() {
+        return friendId;
+    }
+
     public void setFriendShipStatus(FriendShipStatus friendShipStatus) {
         this.friendShipStatus = friendShipStatus;
     }
