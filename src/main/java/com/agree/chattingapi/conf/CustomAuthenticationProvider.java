@@ -3,6 +3,7 @@ package com.agree.chattingapi.conf;
 import com.agree.chattingapi.dtos.user.UserDetailsDto;
 import com.agree.chattingapi.services.impls.UserDetailsServiceImpl;
 import jakarta.annotation.Resource;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -11,7 +12,7 @@ import org.springframework.security.core.AuthenticationException;
 
 public class CustomAuthenticationProvider implements AuthenticationProvider {
 
-    @Resource
+    @Autowired
     private UserDetailsServiceImpl userDetailsService;
 
     @Override

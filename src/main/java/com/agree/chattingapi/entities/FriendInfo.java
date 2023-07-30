@@ -20,6 +20,10 @@ public class FriendInfo extends CommonEntity {
     @Enumerated(EnumType.STRING)
     private FriendShipStatus friendShipStatus;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private UserInfo user;
+
     public FriendInfo(){}
     public FriendInfo(String id, String friendId){
         this.id = id;

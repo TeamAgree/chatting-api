@@ -1,9 +1,8 @@
 package com.agree.chattingapi.entities;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 @Table(name = "user_info")
@@ -30,6 +29,13 @@ public class UserInfo extends CommonEntity {
 
     @Column(name = "push_key")
     private String pushKey;
+
+    @ManyToOne
+    @JoinColumn(name = "user_chatroom_id")
+    private UserChatroom userChatroom;
+
+    @OneToMany(mappedBy = "user")
+    private List<FriendInfo> friends;
 
     public UserInfo(String id, String pw, String name, String birth) {
         this.id = id;

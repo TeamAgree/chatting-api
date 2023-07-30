@@ -3,6 +3,7 @@ package com.agree.chattingapi.controllers.privates;
 import com.agree.chattingapi.dtos.friend.AddFriendRequest;
 import com.agree.chattingapi.responses.CommonResponse;
 import com.agree.chattingapi.services.FriendService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -16,8 +17,8 @@ public class PrivateFriendController {
     }
 
     @PostMapping
-    public CommonResponse<String> addFriend(@RequestBody AddFriendRequest request){
-        return new CommonResponse<>(friendService.addFriend(request));
+    public ResponseEntity<CommonResponse<String>> addFriend(@RequestBody AddFriendRequest request){
+        return ResponseEntity.ok(new CommonResponse<>(friendService.addFriend(request)));
     }
 
     @PutMapping("/favorite")
