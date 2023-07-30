@@ -3,6 +3,7 @@ package com.agree.chattingapi.entities;
 import jakarta.persistence.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "user_info")
@@ -36,6 +37,16 @@ public class UserInfo extends CommonEntity {
 
     @OneToMany(mappedBy = "user")
     private List<FriendInfo> friends;
+
+    public List<String> getFriends() {
+        if (this.friends != null) {
+            return friends.stream()
+                    .map(FriendInfo::getFriendId)
+                    .collect(Collectors.toList());
+        }else {
+            return null;
+        }
+    }
 
     public UserInfo(String id, String pw, String name, String birth) {
         this.id = id;
