@@ -7,6 +7,8 @@ import com.agree.chattingapi.entities.FriendInfoId;
 import com.agree.chattingapi.entities.UserInfo;
 import com.agree.chattingapi.repositories.FriendRepository;
 import com.agree.chattingapi.repositories.UserRepository;
+import com.agree.chattingapi.utils.CustomizedException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,7 +25,9 @@ public class FriendService {
 
     @Transactional
     public String addFriend(AddFriendRequest request){
-        FriendInfo addFriend = new FriendInfo(request.getId(), request.getFriendId());
+        UserInfo userInfo = userRepository.findById(request.getId())
+                .orElseThrow(() -> new CustomizedException("회원정보를 찾을 수 없습니다."));
+        FriendInfo addFriend = new FriendInfo(userInfo, request.getFriendId());
 
         friendRepository.save(addFriend);
 
@@ -32,7 +36,9 @@ public class FriendService {
 
     @Transactional
     public String setFavorite(AddFriendRequest request){
-        FriendInfo findFriend = friendRepository.findById(new FriendInfoId(request.getId(), request.getFriendId())).orElse(null);
+        UserInfo userInfo = userRepository.findById(request.getId())
+                .orElseThrow(() -> new CustomizedException("회원정보를 찾을 수 없습니다."));
+        FriendInfo findFriend = friendRepository.findById(new FriendInfoId(userInfo, request.getFriendId())).orElse(null);
 
         findFriend.setFriendShipStatus(FriendShipStatus.FAVORITE);
 
@@ -41,7 +47,9 @@ public class FriendService {
 
     @Transactional
     public String setBlock(AddFriendRequest request){
-        FriendInfo findFriend = friendRepository.findById(new FriendInfoId(request.getId(), request.getFriendId())).orElse(null);
+        UserInfo userInfo = userRepository.findById(request.getId())
+                .orElseThrow(() -> new CustomizedException("회원정보를 찾을 수 없습니다."));
+        FriendInfo findFriend = friendRepository.findById(new FriendInfoId(userInfo, request.getFriendId())).orElse(null);
 
         findFriend.setFriendShipStatus(FriendShipStatus.BLOCK);
 

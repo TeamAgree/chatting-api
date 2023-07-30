@@ -3,13 +3,13 @@ package com.agree.chattingapi.entities;
 import java.io.Serializable;
 
 public class FriendInfoId implements Serializable {
-    private String id;
+    private UserInfo user;
     private String friendId;
 
     public FriendInfoId(){}
 
-    public FriendInfoId(String id, String friendId){
-        this.id = id;
+    public FriendInfoId(UserInfo user, String friendId){
+        this.user = user;
         this.friendId = friendId;
     }
 }

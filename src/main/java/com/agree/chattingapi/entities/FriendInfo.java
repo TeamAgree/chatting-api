@@ -9,8 +9,9 @@ import jakarta.persistence.*;
 public class FriendInfo extends CommonEntity {
 
     @Id
-    @Column(name = "user_id", nullable = false, length = 15)
-    private String id;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private UserInfo user;
 
     @Id
     @Column(name = "friend_id", nullable = false, length = 15)
@@ -20,13 +21,9 @@ public class FriendInfo extends CommonEntity {
     @Enumerated(EnumType.STRING)
     private FriendShipStatus friendShipStatus;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private UserInfo user;
-
     public FriendInfo(){}
-    public FriendInfo(String id, String friendId){
-        this.id = id;
+    public FriendInfo(UserInfo user, String friendId){
+        this.user = user;
         this.friendId = friendId;
         this.friendShipStatus = FriendShipStatus.FRIEND;
     }
