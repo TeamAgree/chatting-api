@@ -3,7 +3,8 @@ package com.agree.chattingapi.services;
 import ch.qos.logback.classic.Logger;
 import com.agree.chattingapi.constants.AuthConstants;
 import com.agree.chattingapi.constants.FriendShipStatus;
-import com.agree.chattingapi.dtos.friend.AddFriendRequest;
+import com.agree.chattingapi.dtos.friend.AddRemoveFriendRequest;
+import com.agree.chattingapi.dtos.user.UserDetailResponse;
 import com.agree.chattingapi.entities.FriendInfo;
 import com.agree.chattingapi.entities.FriendInfoId;
 import com.agree.chattingapi.entities.UserInfo;
@@ -31,7 +32,7 @@ public class FriendService {
     }
 
     @Transactional
-    public String addFriend(AddFriendRequest request){
+    public String addFriend(AddRemoveFriendRequest request){
         UserInfo userInfo = userRepository.findById(request.getId())
                 .orElseThrow(() -> new CustomizedException("회원정보를 찾을 수 없습니다."));
         FriendInfo addFriend = new FriendInfo(userInfo, request.getFriendId());
@@ -42,7 +43,19 @@ public class FriendService {
     }
 
     @Transactional
-    public String setFavorite(AddFriendRequest request){
+    public String deleteFriend(AddRemoveFriendRequest request){
+        UserInfo userInfo = userRepository.findById(request.getId())
+                .orElseThrow(() -> new CustomizedException("회원정보를 찾을 수 없습니다."));
+        FriendInfo findFriend = friendRepository.findById(new FriendInfoId(userInfo, request.getFriendId()))
+                .orElseThrow(() -> new CustomizedException("친구정보를 찾을 수 없습니다."));
+
+        friendRepository.delete(findFriend);
+
+        return "success";
+    }
+
+    @Transactional
+    public String setFavorite(AddRemoveFriendRequest request){
         UserInfo userInfo = userRepository.findById(request.getId())
                 .orElseThrow(() -> new CustomizedException("회원정보를 찾을 수 없습니다."));
         FriendInfo findFriend = friendRepository.findById(new FriendInfoId(userInfo, request.getFriendId())).orElse(null);
@@ -53,7 +66,7 @@ public class FriendService {
     }
 
     @Transactional
-    public String setBlock(AddFriendRequest request){
+    public String setBlock(AddRemoveFriendRequest request){
         UserInfo userInfo = userRepository.findById(request.getId())
                 .orElseThrow(() -> new CustomizedException("회원정보를 찾을 수 없습니다."));
         FriendInfo findFriend = friendRepository.findById(new FriendInfoId(userInfo, request.getFriendId())).orElse(null);
@@ -70,6 +83,14 @@ public class FriendService {
         log.warn("find friend");
 
         return userRepository.findById(userId).get().getFriends();
+    }
+
+    @Transactional
+    public UserDetailResponse getFriendDetail(String id){
+        UserInfo findFriend = userRepository.findById(id).orElse(null);
+        UserDetailResponse result = new UserDetailResponse(findFriend);
+
+        return result;
     }
 
 }

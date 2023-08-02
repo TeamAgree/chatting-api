@@ -1,6 +1,6 @@
 package com.agree.chattingapi.dtos.friend;
 
-public class AddFriendRequest {
+public class AddRemoveFriendRequest {
 
     private String id;
     private String friendId;
