@@ -13,7 +13,7 @@ public class UserInfo extends CommonEntity {
     @Column(name = "user_id", nullable = false, length = 15)
     private String id;
 
-    @Column(name = "password", nullable = false, length = 255)
+    @Column(name = "password", nullable = false)
     private String pw;
 
     @Column(name = "name", nullable = false, length = 12)
@@ -30,10 +30,6 @@ public class UserInfo extends CommonEntity {
 
     @Column(name = "push_key")
     private String pushKey;
-
-    @ManyToOne
-    @JoinColumn(name = "user_chatroom_id")
-    private UserChatroom userChatroom;
 
     @OneToMany(mappedBy = "user")
     private List<FriendInfo> friends;
