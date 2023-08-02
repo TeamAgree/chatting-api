@@ -60,7 +60,9 @@ public class FriendService {
                 .orElseThrow(() -> new CustomizedException("회원정보를 찾을 수 없습니다."));
         FriendInfo findFriend = friendRepository.findById(new FriendInfoId(userInfo, request.getFriendId())).orElse(null);
 
-        findFriend.setFriendShipStatus(FriendShipStatus.FAVORITE);
+        if (findFriend != null) {
+            findFriend.setFriendShipStatus(FriendShipStatus.FAVORITE);
+        }
 
         return "success";
     }
@@ -71,7 +73,9 @@ public class FriendService {
                 .orElseThrow(() -> new CustomizedException("회원정보를 찾을 수 없습니다."));
         FriendInfo findFriend = friendRepository.findById(new FriendInfoId(userInfo, request.getFriendId())).orElse(null);
 
-        findFriend.setFriendShipStatus(FriendShipStatus.BLOCK);
+        if (findFriend != null) {
+            findFriend.setFriendShipStatus(FriendShipStatus.BLOCK);
+        }
 
         return "success";
     }
@@ -79,8 +83,6 @@ public class FriendService {
     @Transactional
     public List<String> getFriends(HttpServletRequest request){
         String userId = TokenUtils.getUserIdFromToken(TokenUtils.getTokenFromHeader(request.getHeader(AuthConstants.AUTH_HEADER)));
-
-        log.warn("find friend");
 
         return userRepository.findById(userId).get().getFriends();
     }

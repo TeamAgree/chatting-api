@@ -1,6 +1,6 @@
 package com.agree.chattingapi.conf;
 
-import com.agree.chattingapi.responses.CommonResponse;
+import com.agree.chattingapi.dtos.CommonResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

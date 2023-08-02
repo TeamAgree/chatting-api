@@ -1,7 +1,7 @@
 package com.agree.chattingapi.controllers.publics;
 
 import com.agree.chattingapi.entities.TestEntity;
-import com.agree.chattingapi.responses.CommonResponse;
+import com.agree.chattingapi.dtos.CommonResponse;
 import com.agree.chattingapi.services.TestService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;

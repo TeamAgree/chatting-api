@@ -2,7 +2,7 @@ package com.agree.chattingapi.controllers.publics;
 
 import com.agree.chattingapi.dtos.user.FirebaseRequest;
 import com.agree.chattingapi.repositories.UserRepository;
-import com.agree.chattingapi.responses.CommonResponse;
+import com.agree.chattingapi.dtos.CommonResponse;
 import com.agree.chattingapi.services.FirebaseService;
 import com.google.firebase.messaging.FirebaseMessagingException;
 import org.springframework.web.bind.annotation.PostMapping;

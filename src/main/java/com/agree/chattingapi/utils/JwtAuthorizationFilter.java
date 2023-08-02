@@ -2,7 +2,7 @@ package com.agree.chattingapi.utils;
 
 import com.agree.chattingapi.constants.AuthConstants;
 import com.agree.chattingapi.constants.StatusCode;
-import com.agree.chattingapi.responses.CommonResponse;
+import com.agree.chattingapi.dtos.CommonResponse;
 import com.agree.chattingapi.services.UserService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;

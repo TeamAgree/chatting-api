@@ -2,7 +2,7 @@ package com.agree.chattingapi.controllers.privates;
 
 import com.agree.chattingapi.dtos.friend.AddRemoveFriendRequest;
 import com.agree.chattingapi.dtos.user.UserDetailResponse;
-import com.agree.chattingapi.responses.CommonResponse;
+import com.agree.chattingapi.dtos.CommonResponse;
 import com.agree.chattingapi.services.FriendService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.ResponseEntity;

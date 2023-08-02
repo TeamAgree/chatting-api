@@ -1,7 +1,7 @@
 package com.agree.chattingapi.controllers.publics;
 
 import com.agree.chattingapi.entities.UserInfo;
-import com.agree.chattingapi.responses.CommonResponse;
+import com.agree.chattingapi.dtos.CommonResponse;
 import com.agree.chattingapi.services.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.ResponseEntity;
@@ -32,13 +32,6 @@ public class PublicUserController {
     @GetMapping("/cookie")
     public CommonResponse<String> getCookie(HttpServletRequest request){
         return new CommonResponse<>(userService.getCookie(request));
-    }
-
-    @GetMapping("/hi")
-    public CommonResponse<String> hi(@AuthenticationPrincipal User user){
-        System.out.println();
-        String name = user.getUsername();
-        return new CommonResponse<>(name);
     }
 
 }

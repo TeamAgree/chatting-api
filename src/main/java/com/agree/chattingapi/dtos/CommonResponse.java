@@ -1,10 +1,9 @@
-package com.agree.chattingapi.responses;
+package com.agree.chattingapi.dtos;
 
 import com.agree.chattingapi.constants.StatusCode;
-import org.antlr.v4.runtime.misc.NotNull;
 
 public class CommonResponse<T> {
-    @NotNull
+
     private StatusCode code;
 
     private String message;
@@ -13,7 +12,7 @@ public class CommonResponse<T> {
 
     public CommonResponse(){}
 
-    public CommonResponse(@NotNull StatusCode code, String message, T result) {
+    public CommonResponse(StatusCode code, String message, T result) {
         this.code = code;
         this.message = message;
         this.result = result;
