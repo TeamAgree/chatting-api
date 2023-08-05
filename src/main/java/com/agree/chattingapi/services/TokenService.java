@@ -28,8 +28,6 @@ public class TokenService {
         }else {
             findToken.setToken(token);
         }
-
-
     }
 
 }

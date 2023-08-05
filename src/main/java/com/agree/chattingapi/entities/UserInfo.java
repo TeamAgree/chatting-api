@@ -34,6 +34,9 @@ public class UserInfo extends CommonEntity {
     @OneToMany(mappedBy = "user")
     private List<FriendInfo> friends;
 
+    @OneToOne(mappedBy = "user")
+    private TokenInfo token;
+
     public List<String> getFriends() {
         if (this.friends != null) {
             return friends.stream()

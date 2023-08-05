@@ -1,9 +1,6 @@
 package com.agree.chattingapi.entities;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "token_info")
@@ -12,6 +9,10 @@ public class TokenInfo extends CommonEntity{
     @Id
     @Column(name = "user_id", nullable = false, length = 15)
     private String id;
+
+    @OneToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id", insertable = false, updatable = false)
+    private UserInfo user;
 
     @Column(name = "token", columnDefinition = "TEXT")
     private String token;
