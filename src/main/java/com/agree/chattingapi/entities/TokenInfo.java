@@ -7,32 +7,33 @@ import jakarta.persistence.*;
 public class TokenInfo extends CommonEntity{
 
     @Id
-    @Column(name = "user_id", nullable = false, length = 15)
-    private String id;
+    @Column(name = "user_id")
+    private String userId;
 
     @OneToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "user_id", insertable = false, updatable = false)
+    @MapsId
+    @JoinColumn(name = "user_id")
     private UserInfo user;
 
     @Column(name = "token", columnDefinition = "TEXT")
     private String token;
 
-    @Column(name = "roles", nullable = false)
+    @Column(name = "roles", nullable = false, length = 5)
     private String roles;
 
     public TokenInfo() {}
-    public TokenInfo(String id, String token, String roles){
-        this.id = id;
+    public TokenInfo(UserInfo user, String token, String roles){
+        this.user = user;
         this.token = token;
         this.roles = roles;
     }
 
-    public String getId() {
-        return id;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getToken() {
@@ -49,5 +50,9 @@ public class TokenInfo extends CommonEntity{
 
     public void setRoles(String roles) {
         this.roles = roles;
+    }
+
+    public void setUser(UserInfo user) {
+        this.user = user;
     }
 }
