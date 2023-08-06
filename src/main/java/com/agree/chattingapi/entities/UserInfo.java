@@ -34,8 +34,11 @@ public class UserInfo extends CommonEntity {
     @OneToMany(mappedBy = "user")
     private List<FriendInfo> friends;
 
-    @OneToOne(mappedBy = "user")
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private TokenInfo token;
+
+    @OneToMany(mappedBy = "user")
+    private List<ChatroomInfo> chatrooms;
 
     public List<String> getFriends() {
         if (this.friends != null) {
@@ -45,6 +48,10 @@ public class UserInfo extends CommonEntity {
         }else {
             return null;
         }
+    }
+
+    public List<ChatroomInfo> getChatrooms() {
+        return chatrooms;
     }
 
     public UserInfo(String id, String pw, String name, String birth) {
