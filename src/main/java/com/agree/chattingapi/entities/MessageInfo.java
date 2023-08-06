@@ -16,10 +16,13 @@ public class MessageInfo extends CommonEntity{
     @JoinColumn(name = "chatroom_id")
     private ChatroomInfo chatroom;
 
-    @Column(name = "message_seq")
+    @Column(name = "message_seq", nullable = false)
     private Long messageSeq;
 
-    @Column(name = "message_status")
+    @Column(name = "message_status", nullable = false, length = 2)
     private MessageStatus messageStatus;
+
+    @Column(name = "message",nullable = false, length = 1000)
+    private String message;
 
 }
