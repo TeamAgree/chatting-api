@@ -3,9 +3,10 @@ package com.agree.chattingapi.entities;
 import jakarta.persistence.*;
 import org.hibernate.annotations.ColumnDefault;
 
+import java.util.List;
+
 @Entity
 @Table(name = "chatroom_info")
-@IdClass(ChatroomInfoId.class)
 public class ChatroomInfo extends CommonEntity{
 
     @Id
@@ -13,9 +14,8 @@ public class ChatroomInfo extends CommonEntity{
     @Column(name = "chatroom_id", nullable = false)
     private Long id;
 
-    @Id
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", nullable = false)
     private UserInfo user;
 
     @Column(name = "room_name", length = 25)
@@ -24,6 +24,9 @@ public class ChatroomInfo extends CommonEntity{
     @Column(name = "read_message_seq", nullable = false)
     @ColumnDefault("0")
     private Long readMessageSeq;
+
+    @OneToMany(mappedBy = "chatroom")
+    private List<MessageInfo> messageList;
 
     public ChatroomInfo(){}
 
