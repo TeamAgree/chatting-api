@@ -1,15 +1,15 @@
 package com.agree.chattingapi.constants;
 
 public enum StatusCode {
-    SUCCESS("00"), FAIL("01"), RE_GENERATE_TOKEN("02");
+    SUCCESS(100), FAIL(101), RE_GENERATE_TOKEN(102);
 
-    private final String code;
+    private final int code;
 
-    StatusCode(String code) {
+    StatusCode(int code) {
         this.code = code;
     }
 
-    public String getCode() {
+    public int getCode() {
         return this.code;
     }
 }

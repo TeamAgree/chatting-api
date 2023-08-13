@@ -4,7 +4,7 @@ import com.agree.chattingapi.constants.StatusCode;
 
 public class CommonResponse<T> {
 
-    private StatusCode code;
+    private int code;
 
     private String message;
 
@@ -13,7 +13,7 @@ public class CommonResponse<T> {
     public CommonResponse(){}
 
     public CommonResponse(StatusCode code, String message, T result) {
-        this.code = code;
+        this.code = code.getCode();
         this.message = message;
         this.result = result;
     }
@@ -26,11 +26,11 @@ public class CommonResponse<T> {
         this(StatusCode.FAIL, message, result);
     }
 
-    public StatusCode getCode() {
+    public int getCode() {
         return code;
     }
 
-    public void setCode(StatusCode code) {
+    public void setCode(int code) {
         this.code = code;
     }
 
