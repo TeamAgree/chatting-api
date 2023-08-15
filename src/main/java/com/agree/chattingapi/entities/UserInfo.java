@@ -19,6 +19,9 @@ public class UserInfo extends CommonEntity {
     @Column(name = "name", nullable = false, length = 12)
     private String name;
 
+    @Column(name = "nick_name", nullable = false, length = 12)
+    private String nickName;
+
     @Column(name = "birth", nullable = false, length = 6)
     private String birth;
 
@@ -38,7 +41,7 @@ public class UserInfo extends CommonEntity {
     private TokenInfo token;
 
     @OneToMany(mappedBy = "user")
-    private List<ChatroomInfo> chatrooms;
+    private List<UserChatroom> chatroom;
 
     public List<String> getFriends() {
         if (this.friends != null) {
@@ -50,21 +53,19 @@ public class UserInfo extends CommonEntity {
         }
     }
 
-    public List<ChatroomInfo> getChatrooms() {
-        return chatrooms;
-    }
-
-    public UserInfo(String id, String pw, String name, String birth) {
+    public UserInfo(String id, String pw, String name, String nickName, String birth) {
         this.id = id;
         this.pw = pw;
         this.name = name;
+        this.nickName = nickName;
         this.birth = birth;
     }
 
-    public UserInfo(String id, String pw, String name, String birth, String roles) {
+    public UserInfo(String id, String pw, String name, String nickName, String birth, String roles) {
         this.id = id;
         this.pw = pw;
         this.name = name;
+        this.nickName = nickName;
         this.birth = birth;
         this.roles = roles;
     }
@@ -93,6 +94,14 @@ public class UserInfo extends CommonEntity {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getNickName(){
+        return nickName;
+    }
+
+    public void setNickName(String nickName){
+        this.nickName = nickName;
     }
 
     public String getBirth() {
