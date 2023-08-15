@@ -26,7 +26,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         UserDetailsDto userDetailsDto = (UserDetailsDto) userDetailsService.loadUserByUsername(userId);
 
         if (!userDetailsDto.getPassword().equalsIgnoreCase(userPw)) {
-            throw new BadCredentialsException(userDetailsDto.getUsername() + " Invalid password");
+            throw new BadCredentialsException("비밀번호가 틀렸습니다.");
         }
         return new UsernamePasswordAuthenticationToken(userDetailsDto, userPw, userDetailsDto.getAuthorities());
     }

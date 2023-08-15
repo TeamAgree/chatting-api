@@ -31,11 +31,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         if (id == null || id.equals("")) {
             return userService.login(request)
                     .map(u -> new UserDetailsDto(u, Collections.singleton(new SimpleGrantedAuthority(u.getId()))))
-                    .orElseThrow(() -> new AuthenticationServiceException("Please enter your ID"));
+                    .orElseThrow(() -> new AuthenticationServiceException("ID를 입력해 주세요."));
         }else {
             return userService.login(request)
                     .map(u -> new UserDetailsDto(u, Collections.singleton(new SimpleGrantedAuthority(u.getId()))))
-                    .orElseThrow(() -> new BadCredentialsException(id + " is not registered"));
+                    .orElseThrow(() -> new BadCredentialsException(id + "은/는 등록되지 않은 사용자입니다."));
         }
     }
 }

@@ -23,13 +23,13 @@ public class CustomAuthFailureHandler implements AuthenticationFailureHandler {
 
         if(exception instanceof BadCredentialsException){
             printWriter.print(new ObjectMapper().writeValueAsString(new CommonResponse<>(
-                    exception.getMessage(), "fail")));
+                    exception.getMessage(), null)));
         }else if(exception instanceof AuthenticationServiceException){
             printWriter.print(new ObjectMapper().writeValueAsString(new CommonResponse<>(
-                    exception.getMessage(),"fail")));
+                    exception.getMessage(),null)));
         }else {
             printWriter.print(new ObjectMapper().writeValueAsString(new CommonResponse<>(
-                    "fail", "fail")));
+                    "fail", null)));
         }
         printWriter.flush();
         printWriter.close();
