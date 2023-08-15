@@ -35,7 +35,9 @@ public class FriendService {
     public String addFriend(AddRemoveFriendRequest request){
         UserInfo userInfo = userRepository.findById(request.getId())
                 .orElseThrow(() -> new CustomizedException("회원정보를 찾을 수 없습니다."));
-        FriendInfo addFriend = new FriendInfo(userInfo, request.getFriendId());
+        UserInfo friendInfo = userRepository.findById(request.getFriendId())
+                .orElseThrow(() -> new CustomizedException("친구 회원정보를 찾을 수 없습니다."));
+        FriendInfo addFriend = new FriendInfo(userInfo, friendInfo);
 
         friendRepository.save(addFriend);
 
@@ -46,7 +48,9 @@ public class FriendService {
     public String deleteFriend(AddRemoveFriendRequest request){
         UserInfo userInfo = userRepository.findById(request.getId())
                 .orElseThrow(() -> new CustomizedException("회원정보를 찾을 수 없습니다."));
-        FriendInfo findFriend = friendRepository.findById(new FriendInfoId(userInfo, request.getFriendId()))
+        UserInfo friendInfo = userRepository.findById(request.getFriendId())
+                .orElseThrow(() -> new CustomizedException("친구정보를 찾을 수 없습니다."));
+        FriendInfo findFriend = friendRepository.findById(new FriendInfoId(userInfo, friendInfo))
                 .orElseThrow(() -> new CustomizedException("친구정보를 찾을 수 없습니다."));
 
         friendRepository.delete(findFriend);
@@ -58,7 +62,9 @@ public class FriendService {
     public String setFavorite(AddRemoveFriendRequest request){
         UserInfo userInfo = userRepository.findById(request.getId())
                 .orElseThrow(() -> new CustomizedException("회원정보를 찾을 수 없습니다."));
-        FriendInfo findFriend = friendRepository.findById(new FriendInfoId(userInfo, request.getFriendId())).orElse(null);
+        UserInfo friendInfo = userRepository.findById(request.getFriendId())
+                .orElseThrow(() -> new CustomizedException("친구정보를 찾을 수 없습니다."));
+        FriendInfo findFriend = friendRepository.findById(new FriendInfoId(userInfo, friendInfo)).orElse(null);
 
         if (findFriend != null) {
             findFriend.setFriendShipStatus(FriendShipStatus.FAVORITE);
@@ -71,7 +77,9 @@ public class FriendService {
     public String setBlock(AddRemoveFriendRequest request){
         UserInfo userInfo = userRepository.findById(request.getId())
                 .orElseThrow(() -> new CustomizedException("회원정보를 찾을 수 없습니다."));
-        FriendInfo findFriend = friendRepository.findById(new FriendInfoId(userInfo, request.getFriendId())).orElse(null);
+        UserInfo friendInfo = userRepository.findById(request.getFriendId())
+                .orElseThrow(() -> new CustomizedException("친구정보를 찾을 수 없습니다."));
+        FriendInfo findFriend = friendRepository.findById(new FriendInfoId(userInfo, friendInfo)).orElse(null);
 
         if (findFriend != null) {
             findFriend.setFriendShipStatus(FriendShipStatus.BLOCK);

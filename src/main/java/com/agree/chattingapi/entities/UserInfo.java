@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 public class UserInfo extends CommonEntity {
 
     @Id
-    @Column(name = "user_id", nullable = false, length = 15)
+    @Column(name = "user_id", nullable = false, length = 30)
     private String id;
 
     @Column(name = "password", nullable = false)
@@ -46,7 +46,7 @@ public class UserInfo extends CommonEntity {
     public List<String> getFriends() {
         if (this.friends != null) {
             return friends.stream()
-                    .map(FriendInfo::getFriendId)
+                    .map(FriendInfo::getFriend)
                     .collect(Collectors.toList());
         }else {
             return null;

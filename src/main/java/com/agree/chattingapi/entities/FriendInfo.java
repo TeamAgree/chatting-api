@@ -14,22 +14,23 @@ public class FriendInfo extends CommonEntity {
     private UserInfo user;
 
     @Id
-    @Column(name = "friend_id", nullable = false, length = 15)
-    private String friendId;
+    @ManyToOne
+    @JoinColumn(name = "friend_id", nullable = false, referencedColumnName = "user_id")
+    private UserInfo friend;
 
     @Column(name = "friendship_status", nullable = false, length = 10)
     @Enumerated(EnumType.STRING)
     private FriendShipStatus friendShipStatus;
 
     public FriendInfo(){}
-    public FriendInfo(UserInfo user, String friendId){
+    public FriendInfo(UserInfo user, UserInfo friend){
         this.user = user;
-        this.friendId = friendId;
+        this.friend = friend;
         this.friendShipStatus = FriendShipStatus.FRIEND;
     }
 
-    public String getFriendId() {
-        return friendId;
+    public String getFriend() {
+        return friend.getId();
     }
 
     public void setFriendShipStatus(FriendShipStatus friendShipStatus) {
