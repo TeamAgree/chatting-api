@@ -1,9 +1,7 @@
 package com.agree.chattingapi.entities;
 
 import jakarta.persistence.*;
-import org.hibernate.annotations.ColumnDefault;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -21,5 +19,7 @@ public class ChatroomInfo extends CommonEntity{
     @OneToMany(mappedBy = "chatroom")
     private List<MessageInfo> messageList;
 
-
+    public Long getId() {
+        return id;
+    }
 }

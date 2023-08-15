@@ -33,16 +33,12 @@ public class UserChatroom extends CommonEntity{
         this.chatroom = chatroom;
     }
 
-    public UserInfo getUser() {
-        return user;
-    }
-
     public void setUser(UserInfo user) {
         this.user = user;
     }
 
-    public ChatroomInfo getChatroom() {
-        return chatroom;
+    public Long getChatroom() {
+        return chatroom.getId();
     }
 
     public void setChatroom(ChatroomInfo chatroom) {

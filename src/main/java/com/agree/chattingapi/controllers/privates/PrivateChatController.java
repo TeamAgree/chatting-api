@@ -2,11 +2,12 @@ package com.agree.chattingapi.controllers.privates;
 
 import com.agree.chattingapi.dtos.CommonResponse;
 import com.agree.chattingapi.dtos.friend.AddRemoveFriendRequest;
+import com.agree.chattingapi.entities.UserChatroom;
 import com.agree.chattingapi.services.ChatService;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/private/chat")
@@ -21,6 +22,11 @@ public class PrivateChatController {
     @PostMapping("/room")
     public CommonResponse<String> createChatroom(@RequestBody AddRemoveFriendRequest request){
         return new CommonResponse<>(chatService.createChatroom(request));
+    }
+
+    @GetMapping("/rooms")
+    public CommonResponse<List<UserChatroom>> getChatrooms(HttpServletRequest request){
+        return new CommonResponse<>(chatService.getChatrooms(request));
     }
 
 }

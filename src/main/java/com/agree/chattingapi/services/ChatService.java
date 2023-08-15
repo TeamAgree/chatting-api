@@ -1,5 +1,6 @@
 package com.agree.chattingapi.services;
 
+import com.agree.chattingapi.constants.AuthConstants;
 import com.agree.chattingapi.dtos.friend.AddRemoveFriendRequest;
 import com.agree.chattingapi.entities.ChatroomInfo;
 import com.agree.chattingapi.entities.UserChatroom;
@@ -7,8 +8,12 @@ import com.agree.chattingapi.entities.UserInfo;
 import com.agree.chattingapi.repositories.ChatroomRepository;
 import com.agree.chattingapi.repositories.UserChatroomRepository;
 import com.agree.chattingapi.repositories.UserRepository;
+import com.agree.chattingapi.utils.TokenUtils;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class ChatService {
@@ -39,6 +44,16 @@ public class ChatService {
         userChatroomRepository.save(createRoom2);
 
         return "success";
+    }
+
+    @Transactional
+    public List<UserChatroom> getChatrooms(HttpServletRequest request){
+        String header = TokenUtils.getTokenFromHeader(request.getHeader(AuthConstants.AUTH_HEADER));
+
+        String userId = TokenUtils.getUserIdFromToken(header);
+        UserInfo findUser = userRepository.findById(userId).orElse(null);
+
+        return userChatroomRepository.findUserChatroomsByUser(findUser);
     }
 
 }
