@@ -18,7 +18,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-websocket'
-//    implementation 'org.springframework.boot:spring-boot-starter-messaging'
+    implementation 'org.springframework:spring-messaging:6.0.11'
     implementation 'javax.xml.bind:jaxb-api:2.4.0-b180830.0359'
     implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
     implementation 'com.google.firebase:firebase-admin:9.2.0'

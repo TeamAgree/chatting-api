@@ -1,10 +1,16 @@
 package com.agree.chattingapi.controllers.privates;
 
 import com.agree.chattingapi.dtos.CommonResponse;
+import com.agree.chattingapi.dtos.chat.MessageDto;
 import com.agree.chattingapi.dtos.friend.AddRemoveFriendRequest;
 import com.agree.chattingapi.entities.UserChatroom;
 import com.agree.chattingapi.services.ChatService;
 import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.Payload;
+import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,7 +21,7 @@ public class PrivateChatController {
 
     private final ChatService chatService;
 
-    public PrivateChatController(ChatService chatSservice){
+    public PrivateChatController(ChatService chatSservice, SimpMessagingTemplate template){
         this.chatService = chatSservice;
     }
 
@@ -27,6 +33,19 @@ public class PrivateChatController {
     @GetMapping("/rooms")
     public CommonResponse<List<UserChatroom>> getChatrooms(HttpServletRequest request){
         return new CommonResponse<>(chatService.getChatrooms(request));
+    }
+
+    @MessageMapping("/chat/sendMessage")
+    @SendTo("/topic/public")
+    public MessageDto sendMessage(@Payload MessageDto chatMessage) {
+        return chatMessage;
+    }
+
+    @MessageMapping("/chat/addUser")
+    @SendTo("/topic/public")
+    public MessageDto addUser(@Payload MessageDto chatMessage, SimpMessageHeaderAccessor headerAccessor) {
+        headerAccessor.getSessionAttributes().put("username", chatMessage.getWriter());
+        return chatMessage;
     }
 
 }
