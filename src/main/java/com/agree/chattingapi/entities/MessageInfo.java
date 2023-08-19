@@ -17,8 +17,12 @@ public class MessageInfo extends CommonEntity{
     @Column(name = "message_seq", nullable = false)
     private Long messageSeq;
 
-    @Column(name = "message_status", nullable = false, length = 3)
-    private MessageStatus messageStatus;
+    @ManyToOne
+    @JoinColumn(name = "writer", referencedColumnName = "user_id", nullable = false)
+    private UserInfo user;
+
+    @Column(name = "message_status", nullable = false, columnDefinition = "int(3)")
+    private int messageStatus;
 
     @Column(name = "message",nullable = false, length = 1000)
     private String message;
@@ -39,12 +43,12 @@ public class MessageInfo extends CommonEntity{
         this.messageSeq = messageSeq;
     }
 
-    public MessageStatus getMessageStatus() {
+    public int getMessageStatus() {
         return messageStatus;
     }
 
     public void setMessageStatus(MessageStatus messageStatus) {
-        this.messageStatus = messageStatus;
+        this.messageStatus = messageStatus.getCode();
     }
 
     public String getMessage() {

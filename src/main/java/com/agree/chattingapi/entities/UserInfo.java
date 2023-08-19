@@ -43,6 +43,9 @@ public class UserInfo extends CommonEntity {
     @OneToMany(mappedBy = "user")
     private List<UserChatroom> chatroom;
 
+    @OneToMany(mappedBy = "user")
+    private List<MessageInfo> messages;
+
     public List<String> getFriends() {
         if (this.friends != null) {
             return friends.stream()
