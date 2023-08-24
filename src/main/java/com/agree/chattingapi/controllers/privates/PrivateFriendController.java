@@ -40,7 +40,7 @@ public class PrivateFriendController {
         return new CommonResponse<>(friendService.setBlock(request));
     }
 
-    @GetMapping
+    @GetMapping("/my-friends")
     public CommonResponse<List<String>> getFriends(HttpServletRequest request){
         return new CommonResponse<>(friendService.getFriends(request));
     }
