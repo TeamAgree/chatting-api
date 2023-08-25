@@ -9,6 +9,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/private/user")
 public class PrivateUserController {
@@ -48,6 +50,11 @@ public class PrivateUserController {
     @GetMapping("/logout")
     public CommonResponse<String> logout(HttpServletRequest request, HttpServletResponse response){
         return new CommonResponse<>(userService.logout(request, response));
+    }
+
+    @GetMapping("/list")
+    public CommonResponse<List<UserInfo>> getUserList(@RequestParam(value = "search") String search){
+        return new CommonResponse<>(userService.getUserList(search));
     }
 
 }
