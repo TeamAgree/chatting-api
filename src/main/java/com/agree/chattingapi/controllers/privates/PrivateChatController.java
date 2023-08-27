@@ -21,7 +21,7 @@ public class PrivateChatController {
 
     private final ChatService chatService;
 
-    public PrivateChatController(ChatService chatSservice, SimpMessagingTemplate template){
+    public PrivateChatController(ChatService chatSservice){
         this.chatService = chatSservice;
     }
 
@@ -33,19 +33,6 @@ public class PrivateChatController {
     @GetMapping("/rooms")
     public CommonResponse<List<UserChatroom>> getChatrooms(HttpServletRequest request){
         return new CommonResponse<>(chatService.getChatrooms(request));
-    }
-
-    @MessageMapping("/chat/sendMessage")
-    @SendTo("/topic/public")
-    public MessageDto sendMessage(@Payload MessageDto chatMessage) {
-        return chatMessage;
-    }
-
-    @MessageMapping("/chat/addUser")
-    @SendTo("/topic/public")
-    public MessageDto addUser(@Payload MessageDto chatMessage, SimpMessageHeaderAccessor headerAccessor) {
-        headerAccessor.getSessionAttributes().put("username", chatMessage.getWriter());
-        return chatMessage;
     }
 
 }

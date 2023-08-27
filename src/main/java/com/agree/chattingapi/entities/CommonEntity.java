@@ -1,27 +1,25 @@
 package com.agree.chattingapi.entities;
 
+import com.agree.chattingapi.utils.UserIdHolder;
 import jakarta.persistence.Column;
 import jakarta.persistence.MappedSuperclass;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
-import org.springframework.web.context.request.RequestAttributes;
-import org.springframework.web.context.request.RequestContextHolder;
 
 import java.time.LocalDateTime;
 
 @MappedSuperclass
 public class CommonEntity {
-
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
 
-    @Column(name = "created_by", nullable = false, length = 15)
+    @Column(name = "created_by", nullable = false, length = 30)
     private String createdBy;
 
     @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
 
-    @Column(name = "updated_by", nullable = false, length = 15)
+    @Column(name = "updated_by", nullable = false, length = 30)
     private String updatedBy;
 
     @PrePersist
@@ -29,7 +27,9 @@ public class CommonEntity {
         LocalDateTime now = LocalDateTime.now();
         createdAt = now;
         updatedAt = now;
-        String userId = (String) RequestContextHolder.currentRequestAttributes().getAttribute("userId", RequestAttributes.SCOPE_REQUEST);
+
+//        String userId = (String) RequestContextHolder.currentRequestAttributes().getAttribute("userId", RequestAttributes.SCOPE_REQUEST);
+        String userId = UserIdHolder.getUserId();
         if (userId != null) {
             createdBy = userId;
             updatedBy = userId;
@@ -37,9 +37,11 @@ public class CommonEntity {
     }
 
     @PreUpdate
-    protected void onUpdate(){
+    protected void onUpdate() {
         updatedAt = LocalDateTime.now();
-        String userId = (String) RequestContextHolder.currentRequestAttributes().getAttribute("userId", RequestAttributes.SCOPE_REQUEST);
+
+//        String userId = (String) RequestContextHolder.currentRequestAttributes().getAttribute("userId", RequestAttributes.SCOPE_REQUEST);
+        String userId = UserIdHolder.getUserId();
         if (userId != null) {
             updatedBy = userId;
         }

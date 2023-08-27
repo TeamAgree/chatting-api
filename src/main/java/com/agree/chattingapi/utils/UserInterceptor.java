@@ -8,13 +8,13 @@ import org.springframework.web.servlet.HandlerInterceptor;
 
 @Configuration
 public class UserInterceptor implements HandlerInterceptor {
-
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
         String token = TokenUtils.getTokenFromHeader(request.getHeader(AuthConstants.AUTH_HEADER));
         if (token != null) {
             String userId = TokenUtils.getUserIdFromToken(token);
-            request.setAttribute("userId", userId);
+//            request.setAttribute("userId", userId);
+            UserIdHolder.setUserId(userId);
         }
         return true;
     }

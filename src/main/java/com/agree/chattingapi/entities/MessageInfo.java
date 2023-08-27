@@ -58,4 +58,8 @@ public class MessageInfo extends CommonEntity{
     public void setMessage(String message) {
         this.message = message;
     }
+
+    public void setUser(UserInfo user) {
+        this.user = user;
+    }
 }
