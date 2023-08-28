@@ -86,6 +86,7 @@ public class UserService {
         if (findUser != null) {
             findUser.setName(request.getName());
             findUser.setBirth(request.getBirth());
+            findUser.setMobileNo(request.getMobileNo());
             return "success";
         } else {
             return "fail";
