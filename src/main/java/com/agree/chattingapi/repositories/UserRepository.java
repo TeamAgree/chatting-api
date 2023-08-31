@@ -14,4 +14,6 @@ public interface UserRepository extends JpaRepository<UserInfo, String> {
     @Query("SELECT u FROM UserInfo u WHERE u.id LIKE :search OR u.nickName LIKE :search OR u.name LIKE :search")
     List<UserInfo> findUsersByAnyMatchingParameter(@Param("search") String search);
 
+    boolean existsByMobileNo(String mobileNo);
+
 }

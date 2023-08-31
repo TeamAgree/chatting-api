@@ -4,6 +4,7 @@ import ch.qos.logback.classic.Logger;
 import com.agree.chattingapi.constants.AuthConstants;
 import com.agree.chattingapi.dtos.user.LoginRequest;
 import com.agree.chattingapi.dtos.user.ModifyUserRequest;
+import com.agree.chattingapi.dtos.user.UserDetailResponse;
 import com.agree.chattingapi.entities.TokenInfo;
 import com.agree.chattingapi.entities.UserInfo;
 import com.agree.chattingapi.repositories.TokenRepository;
@@ -33,11 +34,11 @@ public class UserService {
     }
 
     @Transactional
-    public UserInfo join(UserInfo userInfo){
+    public UserDetailResponse join(UserInfo userInfo){
         userInfo.setCreatedBy(userInfo.getId());
         userInfo.setUpdatedBy(userInfo.getId());
         userRepository.save(userInfo);
-        return userInfo;
+        return new UserDetailResponse(userInfo);
     }
 
     @Transactional
@@ -46,13 +47,25 @@ public class UserService {
     }
 
     @Transactional
-    public String doubleCheck(String id){
-        boolean cnt = userRepository.existsById(id);
+    public String doubleCheck(String param, String type){
+        if(type.equals("id")) {
+            boolean cnt = userRepository.existsById(param);
 
-        if(cnt){
-            return id + "는 이미 사용중입니다.";
-        }else {
-            return "사용 가능한 아이디입니다.";
+            if (cnt) {
+                return param + "는 이미 사용중입니다.";
+            } else {
+                return "사용 가능한 아이디입니다.";
+            }
+        } else if (type.equals("mobileNo")) {
+            boolean cnt = userRepository.existsByMobileNo(param);
+
+            if(cnt){
+                return param + "은/는 이미 사용중입니다.";
+            } else {
+                return "사용 가능한 휴대폰번호입니다.";
+            }
+        } else {
+            return "";
         }
     }
 
