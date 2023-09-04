@@ -23,9 +23,9 @@ public class PublicUserController {
         return ResponseEntity.ok(new CommonResponse<>(userService.join(user)));
     }
 
-    @GetMapping("/double-check/{param}")
-    public CommonResponse<String> doubleCheck(@PathVariable String param, @RequestParam String type){
-        return new CommonResponse<>(userService.doubleCheck(param, type));
+    @GetMapping("/double-check/{type}/{input}")
+    public CommonResponse<String> doubleCheck(@PathVariable String type, @PathVariable String input){
+        return new CommonResponse<>(userService.doubleCheck(type, input));
     }
 
     @GetMapping("/cookie")

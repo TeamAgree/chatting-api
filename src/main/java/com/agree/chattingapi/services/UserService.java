@@ -34,7 +34,7 @@ public class UserService {
     }
 
     @Transactional
-    public UserDetailResponse join(UserInfo userInfo){
+    public UserDetailResponse join(UserInfo userInfo) {
         userInfo.setCreatedBy(userInfo.getId());
         userInfo.setUpdatedBy(userInfo.getId());
         userRepository.save(userInfo);
@@ -42,34 +42,36 @@ public class UserService {
     }
 
     @Transactional
-    public Optional<UserInfo> login(LoginRequest request){
+    public Optional<UserInfo> login(LoginRequest request) {
         return userRepository.findById(request.getId());
     }
 
     @Transactional
-    public String doubleCheck(String param, String type){
-        if(type.equals("id")) {
-            boolean cnt = userRepository.existsById(param);
+    public String doubleCheck(String type, String input) {
+        boolean cnt;
+        switch (type) {
+            case "id":
+                cnt = userRepository.existsById(input);
 
-            if (cnt) {
-                return param + "는 이미 사용중입니다.";
-            } else {
-                return "사용 가능한 아이디입니다.";
-            }
-        } else if (type.equals("mobileNo")) {
-            boolean cnt = userRepository.existsByMobileNo(param);
+                if (cnt) {
+                    return input + "는 이미 사용중입니다.";
+                } else {
+                    return "사용 가능한 아이디입니다.";
+                }
+            case "mobileNo":
+                cnt = userRepository.existsByMobileNo(input);
 
-            if(cnt){
-                return param + "은/는 이미 사용중입니다.";
-            } else {
-                return "사용 가능한 휴대폰번호입니다.";
-            }
-        } else {
-            return "";
+                if (cnt) {
+                    return input + "은/는 이미 사용중입니다.";
+                } else {
+                    return "사용 가능한 휴대폰번호입니다.";
+                }
+            default:
+                return null;
         }
     }
 
-    public String getCookie(HttpServletRequest request){
+    public String getCookie(HttpServletRequest request) {
         Cookie[] cookies = request.getCookies();
         if (cookies != null) {
             for (Cookie cookie : cookies) {
@@ -82,7 +84,7 @@ public class UserService {
     }
 
     @Transactional
-    public UserInfo getUser(HttpServletRequest request){
+    public UserInfo getUser(HttpServletRequest request) {
         String header = TokenUtils.getTokenFromHeader(request.getHeader(AuthConstants.AUTH_HEADER));
 
         String userId = TokenUtils.getUserIdFromToken(header);
@@ -93,7 +95,7 @@ public class UserService {
     }
 
     @Transactional
-    public String modifyUser(ModifyUserRequest request){
+    public String modifyUser(ModifyUserRequest request) {
         UserInfo findUser = userRepository.findById(request.getId()).orElse(null);
 
         if (findUser != null) {
@@ -107,7 +109,7 @@ public class UserService {
     }
 
     @Transactional
-    public String deleteUser(String userId){
+    public String deleteUser(String userId) {
         UserInfo findUser = userRepository.findById(userId).orElse(null);
 
         if (findUser != null) {
@@ -120,31 +122,31 @@ public class UserService {
     }
 
     @Transactional
-    public String modifyPw(ModifyUserRequest request){
+    public String modifyPw(ModifyUserRequest request) {
         UserInfo findUser = userRepository.findById(request.getId()).orElse(null);
 
-        if(findUser != null){
+        if (findUser != null) {
             findUser.setPw(request.getPw());
             return "success";
-        }else {
+        } else {
             return "fail";
         }
     }
 
     @Transactional
-    public String modifyPushKey(ModifyUserRequest request){
+    public String modifyPushKey(ModifyUserRequest request) {
         UserInfo findUser = userRepository.findById(request.getId()).orElse(null);
 
-        if(findUser != null){
+        if (findUser != null) {
             findUser.setPushKey(request.getPushKey());
             return "success";
-        }else {
+        } else {
             return "fail";
         }
     }
 
     @Transactional
-    public String logout(HttpServletRequest request, HttpServletResponse response){
+    public String logout(HttpServletRequest request, HttpServletResponse response) {
         Cookie cookie = new Cookie("chatting-app", null);
         cookie.setMaxAge(0);
         cookie.setPath("/");
@@ -152,7 +154,7 @@ public class UserService {
 
         String userId = TokenUtils.getUserIdFromToken(TokenUtils.getTokenFromHeader(request.getHeader(AuthConstants.AUTH_HEADER)));
         TokenInfo findToken = tokenRepository.findById(userId).orElse(null);
-        if(findToken != null) {
+        if (findToken != null) {
             findToken.setToken(null);
         }
 
@@ -162,7 +164,7 @@ public class UserService {
     }
 
     @Transactional
-    public List<UserInfo> getUserList(String search){
+    public List<UserInfo> getUserList(String search) {
         List<UserInfo> findUsers = userRepository.findUsersByAnyMatchingParameter("%" + search + "%");
         return findUsers;
     }
