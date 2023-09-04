@@ -58,7 +58,7 @@ public class UserService {
                 } else {
                     return "사용 가능한 아이디입니다.";
                 }
-            case "mobileNo":
+            case "mobile-no":
                 cnt = userRepository.existsByMobileNo(input);
 
                 if (cnt) {
