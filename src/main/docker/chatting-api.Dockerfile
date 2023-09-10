@@ -1,5 +1,5 @@
 # Build stage
-FROM adoptopenjdk:17-jdk-hotspot AS builder
+FROM webhippie/temurin:17 AS builder
 
 RUN apt-get update && apt-get install -y findutils
 
@@ -8,6 +8,6 @@ COPY ./chatting-api .
 RUN ./gradlew build
 
 # Run stage
-FROM adoptopenjdk:17-jdk-hotspot
+FROM webhippie/temurin:17
 COPY --from=builder /workspace/chatting-api/build/libs/*.jar app.jar
 ENTRYPOINT ["java", "-jar", "app.jar"]
