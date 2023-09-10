@@ -3,7 +3,7 @@ FROM openjdk:17-jdk-buster AS builder
 
 RUN apt-get update && apt-get install -y findutils
 
-WORKDIR /workspace/chatting-api
+WORKDIR /home/agree/chatting-api
 COPY . .
 RUN ./chatting-api/gradlew build
 
