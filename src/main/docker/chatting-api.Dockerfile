@@ -9,5 +9,5 @@ RUN ./chatting-api/gradlew build
 
 # Run stage
 FROM openjdk:17-jdk-buster
-COPY --from=builder /workspace/chatting-api/build/libs/*.jar app.jar
+COPY --from=builder /chatting-api/build/libs/*.jar app.jar
 ENTRYPOINT ["java", "-jar", "app.jar"]
