@@ -25,6 +25,9 @@ public class UserInfo extends CommonEntity {
     @Column(name = "birth", nullable = false, length = 6)
     private String birth;
 
+    @Column(name = "mobile_no", nullable = false, length = 11, unique = true)
+    private String mobileNo;
+
     @Column(name = "status", nullable = false, length = 1)
     private String status = "Y";
 
@@ -137,5 +140,13 @@ public class UserInfo extends CommonEntity {
 
     public void setPushKey(String pushKey) {
         this.pushKey = pushKey;
+    }
+
+    public String getMobileNo() {
+        return mobileNo;
+    }
+
+    public void setMobileNo(String mobileNo) {
+        this.mobileNo = mobileNo;
     }
 }

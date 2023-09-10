@@ -37,7 +37,7 @@ public class MessageService {
     public void sendMessage(MessageDto message){
         ChatroomInfo findChatroom = chatroomRepository.findById(message.getChatroomId()).orElse(null);
         UserInfo findUser = userRepository.findById(message.getWriter()).orElse(null);
-        Long msgSeq = messageRepository.findMaxSeqByChatroomId(message.getChatroomId()).orElse(1L) + 1;
+        Long msgSeq = messageRepository.findMaxSeqByChatroomId(message.getChatroomId()).orElse(0L) + 1;
 
         log.warn(msgSeq.toString());
         MessageInfo messageInfo = new MessageInfo();

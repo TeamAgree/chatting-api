@@ -5,6 +5,7 @@ public class ModifyUserRequest {
     private String id;
     private String name;
     private String birth;
+    private String mobileNo;
     private String pw;
     private String pushKey;
 
@@ -26,5 +27,9 @@ public class ModifyUserRequest {
 
     public String getPushKey(){
         return pushKey;
+    }
+
+    public String getMobileNo() {
+        return mobileNo;
     }
 }

@@ -1,12 +1,11 @@
 package com.agree.chattingapi.controllers.publics;
 
-import com.agree.chattingapi.entities.UserInfo;
 import com.agree.chattingapi.dtos.CommonResponse;
+import com.agree.chattingapi.dtos.user.UserDetailResponse;
+import com.agree.chattingapi.entities.UserInfo;
 import com.agree.chattingapi.services.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -20,13 +19,13 @@ public class PublicUserController {
     }
 
     @PostMapping("/join")
-    public ResponseEntity<CommonResponse<UserInfo>> join(@RequestBody UserInfo user){
+    public ResponseEntity<CommonResponse<UserDetailResponse>> join(@RequestBody UserInfo user){
         return ResponseEntity.ok(new CommonResponse<>(userService.join(user)));
     }
 
-    @GetMapping("/double-check/{id}")
-    public CommonResponse<String> doubleCheck(@PathVariable String id){
-        return new CommonResponse<>(userService.doubleCheck(id));
+    @GetMapping("/double-check/{type}/{input}")
+    public CommonResponse<String> doubleCheck(@PathVariable String type, @PathVariable String input){
+        return new CommonResponse<>(userService.doubleCheck(type, input));
     }
 
     @GetMapping("/cookie")
