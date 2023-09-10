@@ -2,7 +2,7 @@
 FROM openjdk:17 AS builder
 WORKDIR /workspace/chatting-api
 COPY . .
-RUN ./workspace/chatting-api/gradlew build
+RUN ./gradlew build
 
 # Run stage
 FROM openjdk:17
