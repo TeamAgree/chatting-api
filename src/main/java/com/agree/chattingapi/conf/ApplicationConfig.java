@@ -30,5 +30,8 @@ public class ApplicationConfig {
     public String getJWTKey() {
         return properties.getProperty("jwt.secret-key");
     }
+    public String getWebIp() {
+        return properties.getProperty("web.ip");
+    }
 }
 
