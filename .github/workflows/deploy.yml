@@ -21,9 +21,9 @@ jobs:
           username: ${{ secrets.SERVER_USERNAME }}
           password: ${{ secrets.SERVER_PASSWORD }}
           script: |
-            cd chatting-api
-            git pull origin main
-            cd ..
+            cd /home/agree/chatting-api
+            git pull
+            cd /home/agree
             docker-compose down
             docker-compose build
             docker-compose up -d
