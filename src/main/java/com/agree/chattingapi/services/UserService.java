@@ -2,6 +2,7 @@ package com.agree.chattingapi.services;
 
 import ch.qos.logback.classic.Logger;
 import com.agree.chattingapi.constants.AuthConstants;
+import com.agree.chattingapi.dtos.CommonResponse;
 import com.agree.chattingapi.dtos.user.LoginRequest;
 import com.agree.chattingapi.dtos.user.ModifyUserRequest;
 import com.agree.chattingapi.dtos.user.UserDetailResponse;
@@ -95,16 +96,17 @@ public class UserService {
     }
 
     @Transactional
-    public String modifyUser(ModifyUserRequest request) {
+    public CommonResponse<String> modifyUser(ModifyUserRequest request) {
         UserInfo findUser = userRepository.findById(request.getId()).orElse(null);
 
         if (findUser != null) {
             findUser.setName(request.getName());
             findUser.setBirth(request.getBirth());
+            findUser.setNickName(request.getNickName());
             findUser.setMobileNo(request.getMobileNo());
-            return "success";
+            return new CommonResponse<>("success");
         } else {
-            return "fail";
+            return new CommonResponse<>("아이디가 없습니다.", null);
         }
     }
 

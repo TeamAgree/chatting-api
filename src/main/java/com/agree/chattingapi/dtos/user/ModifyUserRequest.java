@@ -4,6 +4,7 @@ public class ModifyUserRequest {
 
     private String id;
     private String name;
+    private String nickName;
     private String birth;
     private String mobileNo;
     private String pw;
@@ -15,6 +16,10 @@ public class ModifyUserRequest {
 
     public String getName() {
         return name;
+    }
+
+    public String getNickName(){
+        return nickName;
     }
 
     public String getBirth() {

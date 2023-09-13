@@ -7,6 +7,7 @@ import com.agree.chattingapi.services.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,8 +29,8 @@ public class PrivateUserController {
     }
 
     @PutMapping
-    public CommonResponse<String> modifyUser(@RequestBody ModifyUserRequest request){
-        return new CommonResponse<>(userService.modifyUser(request));
+    public ResponseEntity<CommonResponse<String>> modifyUser(@RequestBody ModifyUserRequest request){
+        return ResponseEntity.ok(userService.modifyUser(request));
     }
 
     @DeleteMapping
