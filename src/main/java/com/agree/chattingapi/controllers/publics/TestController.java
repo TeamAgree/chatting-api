@@ -30,4 +30,9 @@ public class TestController {
         return new CommonResponse<>(testService.setTest());
     }
 
+    @GetMapping("/web-server-ip")
+    public CommonResponse<String> getWebServerIp(){
+        return new CommonResponse<>(testService.getWebServerIp());
+    }
+
 }

@@ -1,5 +1,6 @@
 package com.agree.chattingapi.services;
 
+import com.agree.chattingapi.conf.ApplicationConfig;
 import com.agree.chattingapi.entities.TestEntity;
 import com.agree.chattingapi.repositories.TestRepository;
 import org.springframework.data.domain.Sort;
@@ -43,6 +44,10 @@ public class TestService {
         testRepository.saveAll(list);
 
         return "success";
+    }
+
+    public String getWebServerIp(){
+        return new ApplicationConfig().getWebIp();
     }
 
 }
