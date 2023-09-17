@@ -27,11 +27,11 @@ public class FileService {
             Path filePath = Paths.get("UPLOAD_DIR" + file.getOriginalFilename());
             Files.write(filePath, bytes);
 
-            return new CommonResponse("File uploaded successfully");
+            return new CommonResponse<>("File uploaded successfully");
 
         } catch (IOException e) {
             e.printStackTrace();
-            return new CommonResponse("File upload failed", HttpStatus.INTERNAL_SERVER_ERROR);
+            return new CommonResponse<>("File upload failed", null);
         }
     }
 
