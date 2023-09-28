@@ -17,14 +17,14 @@ public class FileService {
     public CommonResponse<String> uploadFile(MultipartFile file){
         try {
             // 파일 저장 디렉토리가 없으면 생성
-            Path path = Paths.get("/file");
+            Path path = Paths.get("/file/");
             if (!Files.exists(path)) {
                 Files.createDirectories(path);
             }
 
             // 파일 저장
             byte[] bytes = file.getBytes();
-            Path filePath = Paths.get("/file" + file.getOriginalFilename());
+            Path filePath = Paths.get("/file/" + file.getOriginalFilename());
             Files.write(filePath, bytes);
 
             return new CommonResponse<>("File uploaded successfully");
