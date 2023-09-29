@@ -1,15 +1,13 @@
 package com.agree.chattingapi.entities;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "file_info")
 public class FileInfo extends CommonEntity {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "file_id", nullable = false)
     private Long id;
 
@@ -24,9 +22,6 @@ public class FileInfo extends CommonEntity {
 
     @Column(name = "uri_path", nullable = false, length = 100)
     private String uriPath;
-
-    @Column(name = "remark", nullable = false, length = 200)
-    private String remark = "";
 
     public FileInfo() {
     }
@@ -59,7 +54,4 @@ public class FileInfo extends CommonEntity {
         return uriPath;
     }
 
-    public String getRemark() {
-        return remark;
-    }
 }

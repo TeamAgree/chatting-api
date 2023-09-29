@@ -1,8 +1,6 @@
 package com.agree.chattingapi.services;
 
 import com.agree.chattingapi.dtos.CommonResponse;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -14,7 +12,7 @@ import java.nio.file.Paths;
 @Service
 public class FileService {
 
-    public CommonResponse<String> uploadFile(MultipartFile file){
+    public CommonResponse<String> uploadFile(MultipartFile file, String userId){
         try {
             // 파일 저장 디렉토리가 없으면 생성
             Path path = Paths.get("/file/");
