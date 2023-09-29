@@ -24,6 +24,6 @@ jobs:
             cd /home/${{ secrets.SERVER_USERNAME }}/chatting-api
             git pull
             cd /home/${{ secrets.SERVER_USERNAME }}
-            docker-compose down
-            docker-compose build
-            docker-compose up -d
+            docker-compose stop chatting-api
+            docker-compose build chatting-api
+            docker-compose up -d chatting-api
