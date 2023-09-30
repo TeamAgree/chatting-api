@@ -38,6 +38,7 @@ public class FileService {
             fileInfo.setLocalPath(path.toString());
             fileInfo.setUriPath(path.toString());
             fileInfo.setCreatedBy(userId);
+            fileInfo.setUpdatedBy(userId);
 
             fileRepository.save(fileInfo);
 
