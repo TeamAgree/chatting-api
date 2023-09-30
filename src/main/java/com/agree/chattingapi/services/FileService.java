@@ -53,6 +53,9 @@ public class FileService {
         } catch (IOException e) {
             e.printStackTrace();
             return new CommonResponse<>("File upload failed", null);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new CommonResponse<>(e.getMessage(), null);
         }
     }
 
