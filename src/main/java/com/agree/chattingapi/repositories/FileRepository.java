@@ -7,12 +7,11 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
-
 @Repository
 public interface FileRepository extends JpaRepository<FileInfo, FileInfoId> {
 
-    @Query("select count(f) from FileInfo f where f.fileName like :formattedDate || '%'")
-    Long countByFileNameStartingWith(@Param("formattedDate") String formattedDate);
+    @Query(value = "SELECT COUNT(*) FROM file_info WHERE file_name LIKE ?1%", nativeQuery = true)
+    Long countByFileNameStartingWith(String formattedDate);
+
 
 }

@@ -56,7 +56,7 @@ public class FileService {
         }
     }
 
-    public String generateFileName() {
+    private String generateFileName() {
         Date now = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat("yyMMdd");
         String formattedDate = sdf.format(now);
