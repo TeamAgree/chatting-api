@@ -37,6 +37,7 @@ public class FileService {
             fileInfo.setExtension(getFileExtension(Objects.requireNonNull(file.getOriginalFilename())));
             fileInfo.setLocalPath(path.toString());
             fileInfo.setUriPath(path.toString());
+            fileInfo.setCreatedBy(userId);
 
             fileRepository.save(fileInfo);
 
