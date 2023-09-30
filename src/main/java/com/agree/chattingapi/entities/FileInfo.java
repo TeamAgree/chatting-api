@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "file_info")
-@IdClass(FileInfoId.class)
 public class FileInfo extends CommonEntity {
 
     @Id
@@ -12,8 +11,7 @@ public class FileInfo extends CommonEntity {
     @Column(name = "file_id", nullable = false)
     private Long id;
 
-    @Id
-    @Column(name = "file_name", nullable = false, length = 20)
+    @Column(name = "file_name", nullable = false, length = 20, unique = true)
     private String fileName;
 
     @Column(name = "extension", nullable = false, length = 10)
