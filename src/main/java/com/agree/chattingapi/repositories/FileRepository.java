@@ -10,8 +10,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface FileRepository extends JpaRepository<FileInfo, FileInfoId> {
 
-    @Query(value = "SELECT COUNT(*) FROM file_info WHERE file_name LIKE ?1%", nativeQuery = true)
-    Long countByFileNameStartingWith(String formattedDate);
+    @Query(value = "SELECT COUNT(*) FROM file_info WHERE file_name LIKE '?1'||'%'", nativeQuery = true)
+    int countByFileNameStartingWith(String formattedDate);
 
 
 }

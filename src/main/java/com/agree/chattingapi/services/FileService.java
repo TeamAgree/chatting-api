@@ -61,12 +61,9 @@ public class FileService {
         SimpleDateFormat sdf = new SimpleDateFormat("yyMMdd");
         String formattedDate = sdf.format(now);
 
-        // 해당 날짜로 시작하는 파일들의 수를 데이터베이스에서 얻습니다.
-        // 예를 들어, "230930"로 시작하는 파일이 10개 있다면 nextNumber는 11이 됩니다.
-        Long countForToday = fileRepository.countByFileNameStartingWith(formattedDate);
-        Long nextNumber = countForToday + 1;
+        int countForToday = fileRepository.countByFileNameStartingWith(formattedDate);
+        int nextNumber = countForToday + 1;
 
-        // 번호를 5자리 숫자 형식으로 포맷팅합니다.
         String formattedNumber = String.format("%05d", nextNumber);
 
         return formattedDate + formattedNumber;
