@@ -31,14 +31,13 @@ public class FileService {
                 Files.createDirectories(path);
             }
 
-            FileInfo fileInfo = new FileInfo();
-
-            fileInfo.setFileName(generateFileName());
-            fileInfo.setExtension(getFileExtension(Objects.requireNonNull(file.getOriginalFilename())));
-            fileInfo.setLocalPath(path.toString());
-            fileInfo.setUriPath(path.toString());
-            fileInfo.setCreatedBy(userId);
-            fileInfo.setUpdatedBy(userId);
+            FileInfo fileInfo = new FileInfo(
+                    generateFileName(),
+                    getFileExtension(Objects.requireNonNull(file.getOriginalFilename())),
+                    path.toString(),
+                    path.toString(),
+                    userId
+            );
 
             fileRepository.save(fileInfo);
 

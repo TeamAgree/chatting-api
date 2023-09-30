@@ -26,12 +26,13 @@ public class FileInfo extends CommonEntity {
     public FileInfo() {
     }
 
-    public FileInfo(Long id, String fileName, String extension, String localPath, String uriPath) {
-        this.id = id;
+    public FileInfo(String fileName, String extension, String localPath, String uriPath, String userId) {
         this.fileName = fileName;
         this.extension = extension;
         this.localPath = localPath;
         this.uriPath = uriPath;
+        this.setCreatedBy(userId);
+        this.setUpdatedBy(userId);
     }
 
     public Long getId() {
