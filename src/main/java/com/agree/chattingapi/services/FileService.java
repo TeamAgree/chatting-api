@@ -61,7 +61,7 @@ public class FileService {
         SimpleDateFormat sdf = new SimpleDateFormat("yyMMdd");
         String formattedDate = sdf.format(now);
 
-        int countForToday = fileRepository.countByFileNameStartingWith(formattedDate);
+        int countForToday = fileRepository.countByFileNameStartsWith(formattedDate);
         int nextNumber = countForToday + 1;
 
         String formattedNumber = String.format("%05d", nextNumber);
