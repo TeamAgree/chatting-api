@@ -56,6 +56,10 @@ public class FileInfo extends CommonEntity {
         return uriPath;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public void setFileName(String fileName) {
         this.fileName = fileName;
     }
