@@ -76,7 +76,13 @@ public class FileService {
         } catch (Exception e) {
             throw new RuntimeException("Error occurred while downloading the file", e);
         }
+    }
 
+    @Transactional
+    public CommonResponse<List<String>> getFileList(String fileId) {
+        List<String> result = fileRepository.findFileNameById(fileId);
+
+        return new CommonResponse<>(result);
     }
 
     private String generateFileName() {

@@ -45,10 +45,10 @@ public class PublicFileController {
                 .body(result.getResource());
     }
 
-    @GetMapping("/download/list/{fileId}")
-    @Operation(summary = "파일 목록 일괄 다운로드", description = "파일 목록 일괄 다운로드")
-    public ResponseEntity<CommonResponse<String>> downloadFileList(@PathVariable String fileId){
-        return ResponseEntity.ok(new CommonResponse<>());
+    @GetMapping("/list/{fileId}")
+    @Operation(summary = "파일 목록 조회", description = "파일 목록 조회")
+    public ResponseEntity<CommonResponse<List<String>>> getFileList(@PathVariable String fileId){
+        return ResponseEntity.ok(fileService.getFileList(fileId));
     }
 
 }
