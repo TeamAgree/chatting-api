@@ -30,7 +30,7 @@ public class FileService {
     @Transactional
     public CommonResponse<String> uploadFile(List<MultipartFile> files, String userId) {
         Path path = Paths.get("/file/");
-        Long fileId = fileRepository.findMaxFileId() + 1;
+        Long fileId = fileRepository.findMaxFileId().orElse(0L) + 1;
 
         for (MultipartFile file : files) {
             FileInfo fileInfo = new FileInfo(

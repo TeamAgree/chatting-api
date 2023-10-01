@@ -25,10 +25,10 @@ public class PublicFileController {
     @PostMapping("/upload")
     @Operation(summary = "파일 업로드", description = "파일 업로드")
     public ResponseEntity<CommonResponse<String>> uploadFile(
-            @RequestParam("files") List<MultipartFile> file,
+            @RequestParam("files") List<MultipartFile> files,
             @RequestParam("userId") String userId
     ) {
-        return ResponseEntity.ok(fileService.uploadFile(file, userId));
+        return ResponseEntity.ok(fileService.uploadFile(files, userId));
     }
 
     @GetMapping("/download/{fileName}")
