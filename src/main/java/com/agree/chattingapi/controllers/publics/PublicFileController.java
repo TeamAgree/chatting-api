@@ -1,10 +1,12 @@
 package com.agree.chattingapi.controllers.publics;
 
 import com.agree.chattingapi.dtos.CommonResponse;
+import com.agree.chattingapi.dtos.file.FileResponse;
 import com.agree.chattingapi.services.FileService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -35,9 +37,12 @@ public class PublicFileController {
     @GetMapping("/download/{fileName}")
     @Operation(summary = "파일 다운로드", description = "파일 다운로드")
     public ResponseEntity<Resource> downloadFile(@PathVariable String fileName){
+        FileResponse result = fileService.downloadFile(fileName);
+
         return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + result.getFileName() + "\"")
                 .contentType(MediaType.APPLICATION_OCTET_STREAM)
-                .body(fileService.downloadFile(fileName));
+                .body(result.getResource());
     }
 
     @GetMapping("/download/list/{fileId}")

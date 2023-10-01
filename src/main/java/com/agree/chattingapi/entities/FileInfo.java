@@ -49,6 +49,10 @@ public class FileInfo extends CommonEntity {
         return fileName;
     }
 
+    public String getRealName(){
+        return realName;
+    }
+
     public String getExtension() {
         return extension;
     }

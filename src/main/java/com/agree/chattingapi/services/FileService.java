@@ -1,6 +1,7 @@
 package com.agree.chattingapi.services;
 
 import com.agree.chattingapi.dtos.CommonResponse;
+import com.agree.chattingapi.dtos.file.FileResponse;
 import com.agree.chattingapi.entities.FileInfo;
 import com.agree.chattingapi.repositories.FileRepository;
 import jakarta.transaction.Transactional;
@@ -59,7 +60,7 @@ public class FileService {
     }
 
     @Transactional
-    public Resource downloadFile(String fileName) {
+    public FileResponse downloadFile(String fileName) {
         try {
             FileInfo fileInfo = fileRepository.findByFileName(fileName);
 
@@ -70,7 +71,7 @@ public class FileService {
                 throw new FileNotFoundException("File not found " + fileInfo.getFileName());
             }
 
-            return resource;
+            return new FileResponse(resource, fileInfo.getRealName());
 
         } catch (Exception e) {
             throw new RuntimeException("Error occurred while downloading the file", e);
