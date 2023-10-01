@@ -3,15 +3,19 @@ package com.agree.chattingapi.services;
 import com.agree.chattingapi.dtos.CommonResponse;
 import com.agree.chattingapi.entities.FileInfo;
 import com.agree.chattingapi.repositories.FileRepository;
+import jakarta.transaction.Transactional;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
+import java.io.FileNotFoundException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 @Service
@@ -19,42 +23,59 @@ public class FileService {
 
     private final FileRepository fileRepository;
 
-    public FileService(FileRepository fileRepository){
+    public FileService(FileRepository fileRepository) {
         this.fileRepository = fileRepository;
     }
 
-    public CommonResponse<String> uploadFile(MultipartFile file, String userId){
-        try {
-            // 파일 저장 디렉토리가 없으면 생성
-            Path path = Paths.get("/file/");
-            if (!Files.exists(path)) {
-                Files.createDirectories(path);
-            }
+    @Transactional
+    public CommonResponse<String> uploadFile(List<MultipartFile> files, String userId) {
+        Path path = Paths.get("/file/");
+        Long fileId = fileRepository.findMaxFileId() + 1;
 
+        for (MultipartFile file : files) {
             FileInfo fileInfo = new FileInfo(
+                    fileId,
                     generateFileName(),
+                    getFileNameWithoutExtension(Objects.requireNonNull(file.getOriginalFilename())),
                     getFileExtension(Objects.requireNonNull(file.getOriginalFilename())),
                     path.toString(),
                     path.toString(),
                     userId
             );
 
-            fileRepository.save(fileInfo);
+            try {
+                byte[] bytes;
+                bytes = file.getBytes();
+                Path filePath = Paths.get("/file/" + fileInfo.getFileName());
+                Files.write(filePath, bytes);
 
-            // 파일 저장
-            byte[] bytes = file.getBytes();
-            Path filePath = Paths.get("/file/" + fileInfo.getFileName());
-            Files.write(filePath, bytes);
-
-            return new CommonResponse<>("File uploaded successfully");
-
-        } catch (IOException e) {
-            e.printStackTrace();
-            return new CommonResponse<>("File upload failed", null);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new CommonResponse<>(e.getMessage(), null);
+                fileRepository.save(fileInfo);
+            } catch (Exception e) {
+                return new CommonResponse<>("Cannot save files", null);
+            }
         }
+
+        return new CommonResponse<>("Files uploaded successfully");
+    }
+
+    @Transactional
+    public CommonResponse<Resource> downloadFile(String fileName) {
+        try {
+            FileInfo fileInfo = fileRepository.findByFileName(fileName);
+
+            Path filePath = Paths.get("/file/" + fileInfo.getFileName());
+            Resource resource = new UrlResource(filePath.toUri());
+
+            if (!resource.exists()) {
+                throw new FileNotFoundException("File not found " + fileInfo.getFileName());
+            }
+
+            return new CommonResponse<>(resource);
+
+        } catch (Exception e) {
+            throw new RuntimeException("Error occurred while downloading the file", e);
+        }
+
     }
 
     private String generateFileName() {
@@ -70,7 +91,7 @@ public class FileService {
         return formattedDate + formattedNumber;
     }
 
-    private static String getFileExtension(String fileName){
+    private static String getFileExtension(String fileName) {
         int lastDotPosition = fileName.lastIndexOf('.');
 
         if (lastDotPosition == -1 || lastDotPosition == fileName.length() - 1) {
@@ -78,6 +99,14 @@ public class FileService {
         }
 
         return fileName.substring(lastDotPosition + 1);
+    }
+
+    private static String getFileNameWithoutExtension(String filename) {
+        int dotIndex = filename.lastIndexOf(".");
+        if(dotIndex == -1) { // No extension found
+            return filename;
+        }
+        return filename.substring(0, dotIndex);
     }
 
 }

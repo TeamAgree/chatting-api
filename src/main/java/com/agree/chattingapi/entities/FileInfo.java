@@ -4,15 +4,19 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "file_info")
+@IdClass(FileInfoId.class)
 public class FileInfo extends CommonEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "file_id", nullable = false)
     private Long id;
 
-    @Column(name = "file_name", nullable = false, length = 20, unique = true)
+    @Id
+    @Column(name = "file_name", nullable = false, length = 11)
     private String fileName;
+
+    @Column(name = "real_name", nullable = false, length = 20)
+    private String realName;
 
     @Column(name = "extension", nullable = false, length = 10)
     private String extension;
@@ -26,8 +30,10 @@ public class FileInfo extends CommonEntity {
     public FileInfo() {
     }
 
-    public FileInfo(String fileName, String extension, String localPath, String uriPath, String userId) {
+    public FileInfo(Long id, String fileName, String realName, String extension, String localPath, String uriPath, String userId) {
+        this.id = id;
         this.fileName = fileName;
+        this.realName = realName;
         this.extension = extension;
         this.localPath = localPath;
         this.uriPath = uriPath;
