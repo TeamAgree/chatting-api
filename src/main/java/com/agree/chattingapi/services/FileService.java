@@ -59,7 +59,7 @@ public class FileService {
     }
 
     @Transactional
-    public CommonResponse<Resource> downloadFile(String fileName) {
+    public Resource downloadFile(String fileName) {
         try {
             FileInfo fileInfo = fileRepository.findByFileName(fileName);
 
@@ -70,7 +70,7 @@ public class FileService {
                 throw new FileNotFoundException("File not found " + fileInfo.getFileName());
             }
 
-            return new CommonResponse<>(resource);
+            return resource;
 
         } catch (Exception e) {
             throw new RuntimeException("Error occurred while downloading the file", e);

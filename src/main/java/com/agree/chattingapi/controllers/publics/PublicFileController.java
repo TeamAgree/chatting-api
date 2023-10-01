@@ -33,7 +33,7 @@ public class PublicFileController {
 
     @GetMapping("/download/{fileName}")
     @Operation(summary = "파일 다운로드", description = "파일 다운로드")
-    public ResponseEntity<CommonResponse<Resource>> downloadFile(@PathVariable String fileName){
+    public ResponseEntity<Resource> downloadFile(@PathVariable String fileName){
         return ResponseEntity.ok(fileService.downloadFile(fileName));
     }
 
