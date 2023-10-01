@@ -71,7 +71,7 @@ public class FileService {
                 throw new FileNotFoundException("File not found " + fileInfo.getFileName());
             }
 
-            return new FileResponse(resource, fileInfo.getRealName());
+            return new FileResponse(resource, fileInfo.getRealName() + "." + fileInfo.getExtension());
 
         } catch (Exception e) {
             throw new RuntimeException("Error occurred while downloading the file", e);
