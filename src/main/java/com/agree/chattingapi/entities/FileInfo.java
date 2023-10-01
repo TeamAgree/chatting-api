@@ -15,7 +15,7 @@ public class FileInfo extends CommonEntity {
     @Column(name = "file_name", nullable = false, length = 11)
     private String fileName;
 
-    @Column(name = "real_name", nullable = false, length = 20)
+    @Column(name = "real_name", nullable = false, length = 40)
     private String realName;
 
     @Column(name = "extension", nullable = false, length = 10)
