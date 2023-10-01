@@ -5,6 +5,7 @@ import com.agree.chattingapi.services.FileService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.core.io.Resource;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -34,7 +35,9 @@ public class PublicFileController {
     @GetMapping("/download/{fileName}")
     @Operation(summary = "파일 다운로드", description = "파일 다운로드")
     public ResponseEntity<Resource> downloadFile(@PathVariable String fileName){
-        return ResponseEntity.ok(fileService.downloadFile(fileName));
+        return ResponseEntity.ok()
+                .contentType(MediaType.APPLICATION_OCTET_STREAM)
+                .body(fileService.downloadFile(fileName));
     }
 
     @GetMapping("/download/list/{fileId}")
