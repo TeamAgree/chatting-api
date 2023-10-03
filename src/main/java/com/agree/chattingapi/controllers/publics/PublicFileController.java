@@ -6,12 +6,18 @@ import com.agree.chattingapi.services.FileService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 @RestController
@@ -50,5 +56,35 @@ public class PublicFileController {
     public ResponseEntity<CommonResponse<List<String>>> getFileList(@PathVariable String fileId){
         return ResponseEntity.ok(fileService.getFileList(fileId));
     }
+
+    @GetMapping("/file/{filename:.+}")
+    public ResponseEntity<Resource> showFile(@PathVariable String filename) {
+        Path fileLocation = Paths.get("/file/" + filename);
+        Resource fileResource = null;
+
+        try {
+            fileResource = new UrlResource(fileLocation.toUri());
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+            return ResponseEntity.notFound().build();
+        }
+
+        if (!fileResource.exists() || !fileResource.isReadable()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        String contentType = "image/jpeg";
+
+        try {
+            contentType = Files.probeContentType(fileLocation);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return ResponseEntity.ok()
+                .contentType(MediaType.parseMediaType(contentType))
+                .body(fileResource);
+    }
+
 
 }
