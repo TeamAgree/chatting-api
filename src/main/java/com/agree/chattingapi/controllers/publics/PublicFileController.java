@@ -57,34 +57,4 @@ public class PublicFileController {
         return ResponseEntity.ok(fileService.getFileList(fileId));
     }
 
-    @GetMapping("/file/{filename:.+}")
-    public ResponseEntity<Resource> showFile(@PathVariable String filename) {
-        Path fileLocation = Paths.get("/file/" + filename);
-        Resource fileResource = null;
-
-        try {
-            fileResource = new UrlResource(fileLocation.toUri());
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-            return ResponseEntity.notFound().build();
-        }
-
-        if (!fileResource.exists() || !fileResource.isReadable()) {
-            return ResponseEntity.notFound().build();
-        }
-
-        String contentType = "image/jpeg";
-
-        try {
-            contentType = Files.probeContentType(fileLocation);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return ResponseEntity.ok()
-                .contentType(MediaType.parseMediaType(contentType))
-                .body(fileResource);
-    }
-
-
 }
