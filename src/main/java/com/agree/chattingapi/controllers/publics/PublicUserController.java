@@ -1,5 +1,6 @@
 package com.agree.chattingapi.controllers.publics;
 
+import ch.qos.logback.classic.Logger;
 import com.agree.chattingapi.conf.ApplicationConfig;
 import com.agree.chattingapi.dtos.CommonResponse;
 import com.agree.chattingapi.dtos.user.UserDetailResponse;
@@ -8,6 +9,7 @@ import com.agree.chattingapi.services.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,6 +19,8 @@ import org.springframework.web.bind.annotation.*;
 public class PublicUserController {
 
     private final UserService userService;
+    private static String webIp = new ApplicationConfig().getWebIp();
+    private static final Logger log = (Logger) LoggerFactory.getLogger(PublicUserController.class);
 
     public PublicUserController(UserService userService) {
         this.userService = userService;
@@ -41,7 +45,8 @@ public class PublicUserController {
 
     @GetMapping("/web-ip")
     public CommonResponse<String> getWebIp(){
-        return new CommonResponse<>(new ApplicationConfig().getWebIp());
+        log.warn(webIp);
+        return new CommonResponse<>(webIp);
     }
 
 }

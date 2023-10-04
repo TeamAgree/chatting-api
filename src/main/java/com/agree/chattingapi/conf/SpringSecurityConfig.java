@@ -29,7 +29,6 @@ import static org.springframework.security.config.Customizer.withDefaults;
 public class SpringSecurityConfig {
 
     private static String webIp = new ApplicationConfig().getWebIp();
-    private static final Logger log = (Logger) LoggerFactory.getLogger(SpringSecurityConfig.class);
 
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
