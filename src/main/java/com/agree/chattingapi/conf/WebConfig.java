@@ -12,7 +12,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class WebConfig implements WebMvcConfigurer {
 
     private final UserInterceptor userInterceptor;
-    private static String webIp = new ApplicationConfig().getWebIp();
+//    private static String webIp = new ApplicationConfig().getWebIp();
     private static final Logger log = (Logger) LoggerFactory.getLogger(WebConfig.class);
 
     public WebConfig(UserInterceptor userInterceptor) {
@@ -24,11 +24,11 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addInterceptor(userInterceptor);
     }
 
-    @Override
-    public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**")
-                .allowedOrigins(webIp + ":3000", webIp + ":23000", "http://code-server:3000", "http://code-server:23000")
-                .allowedMethods("GET", "POST", "PUT", "DELETE")
-                .allowCredentials(true);
-    }
+//    @Override
+//    public void addCorsMappings(CorsRegistry registry) {
+//        registry.addMapping("/**")
+//                .allowedOrigins(webIp + ":3000", webIp + ":23000", "http://code-server:3000", "http://code-server:23000")
+//                .allowedMethods("GET", "POST", "PUT", "DELETE")
+//                .allowCredentials(true);
+//    }
 }
