@@ -1,5 +1,6 @@
 package com.agree.chattingapi.controllers.publics;
 
+import com.agree.chattingapi.conf.ApplicationConfig;
 import com.agree.chattingapi.dtos.CommonResponse;
 import com.agree.chattingapi.dtos.user.UserDetailResponse;
 import com.agree.chattingapi.entities.UserInfo;
@@ -36,6 +37,11 @@ public class PublicUserController {
     @GetMapping("/cookie")
     public CommonResponse<String> getCookie(HttpServletRequest request){
         return new CommonResponse<>(userService.getCookie(request));
+    }
+
+    @GetMapping("/web-ip")
+    public CommonResponse<String> getWebIp(){
+        return new CommonResponse<>(new ApplicationConfig().getWebIp());
     }
 
 }
