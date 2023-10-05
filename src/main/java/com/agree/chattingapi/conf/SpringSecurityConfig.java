@@ -28,7 +28,7 @@ import static org.springframework.security.config.Customizer.withDefaults;
 @EnableWebSecurity
 public class SpringSecurityConfig {
 
-    private static String webIp = new ApplicationConfig().getWebIp();
+    private static String webUrl = new ApplicationConfig().getWebIp();
 
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
@@ -62,7 +62,7 @@ public class SpringSecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
 
-        configuration.addAllowedOrigin("http://agree.iptime.org:23000");
+        configuration.addAllowedOrigin(webUrl);
         configuration.addAllowedHeader("*");
         configuration.addAllowedMethod("*");
         configuration.setAllowCredentials(true);
